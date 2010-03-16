@@ -21,6 +21,8 @@ flickrSuggest runs on PHP and MySQL, with the great help of some PEAR components
 * [Flickr_API](http://code.iamcal.com/php/flickr/readme.htm)
 * XML_Tree
 
+The tables must be created in the database with the "flickrsuggest.sql" script.
+
 After install, you need to copy "inc/config-sample.inc.php" to "inc/config.inc.php" and edit it with your info.
 
 ## Credits
