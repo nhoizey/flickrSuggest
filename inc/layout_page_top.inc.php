@@ -31,6 +31,7 @@
           $menu = array(
               '/index.php' => 'Home',
               '/update.php' => 'Update',
+              'http://www.flickr.com/groups/flickrsuggest/' => 'flickSuggest group',
               'http://flickrate.gasteroprod.com/' => 'Enhance Flickr favorites with flickRate'
               );
           foreach($menu as $url => $label) {
