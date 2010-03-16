@@ -1,3 +1,4 @@
 cache/photos/*
 inc/config.inc.php
 .DS_Store
+*.esproj
