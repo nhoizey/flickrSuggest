@@ -13,10 +13,10 @@ The development is [hosted on GitHub](http://github.com/nhoizey/flickrSuggest), 
 ## Requisites
 
 flickrSuggest runs on PHP and MySQL, with the great help of some PEAR components:
-- Cache_Lite
-- DB
-- [Flickr_API](http://code.iamcal.com/php/flickr/readme.htm)
-- XML_Tree
+* Cache_Lite
+* DB
+* [Flickr_API](http://code.iamcal.com/php/flickr/readme.htm)
+* XML_Tree
 
 ## Credits
 
