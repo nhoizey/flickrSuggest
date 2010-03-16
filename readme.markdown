@@ -10,6 +10,8 @@ Unfortunately, I can't host such a heavy computing system, so this is only avail
 
 The development is [hosted on GitHub](http://github.com/nhoizey/flickrSuggest), so you can fork it and help me enhance it at will!
 
+You can add this to your favorite Apps in Flickr's [App Garden](http://www.flickr.com/services/apps/72157623634339128/), and discuss it in it's own [Flickr Group](http://www.flickr.com/groups/flickrsuggest/).
+
 ## Requisites
 
 flickrSuggest runs on PHP and MySQL, with the great help of some PEAR components:
@@ -19,10 +21,10 @@ flickrSuggest runs on PHP and MySQL, with the great help of some PEAR components
 * [Flickr_API](http://code.iamcal.com/php/flickr/readme.htm)
 * XML_Tree
 
+After install, you need to copy "inc/config-sample.inc.php" to "inc/config.inc.php" and edit it with your info.
+
 ## Credits
 
 flickrSuggest has been created by [Nicolas Hoizey](http://www.gasteroprod.com/), which is also (of course) a [Flickr user](http://www.flickr.com/photos/nicolas-hoizey/).
 
 The design is mainly based on the [Blueprint CSS Framework](http://blueprintcss.org/) and uses the free [GraublauWeb](http://www.fonts.info/info/press/font-face-embedding-demo.htm) font for the logo and titles.
-
-You can add this to your favorite Apps in Flickr's [App Garden](http://www.flickr.com/services/apps/72157623634339128/), and discuss it in it's own [Flickr Group](http://www.flickr.com/groups/flickrsuggest/).
