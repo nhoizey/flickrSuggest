@@ -24,3 +24,5 @@ flickrSuggest runs on PHP and MySQL, with the great help of some PEAR components
 flickrSuggest has been created by [Nicolas Hoizey](http://www.gasteroprod.com/), which is also (of course) a [Flickr user](http://www.flickr.com/photos/nicolas-hoizey/).
 
 The design is mainly based on the [Blueprint CSS Framework](http://blueprintcss.org/) and uses the free [GraublauWeb](http://www.fonts.info/info/press/font-face-embedding-demo.htm) font for the logo and titles.
+
+You can add this to your favorite Apps in Flickr's [App Garden](http://www.flickr.com/services/apps/72157623634339128/), and discuss it in it's own [Flickr Group](http://www.flickr.com/groups/flickrsuggest/).
