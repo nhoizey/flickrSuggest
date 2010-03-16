@@ -1,0 +1,194 @@
+@font-face { font-family:GraublauWeb; src:url(../fonts/GraublauWeb.otf) format("opentype") }
+@font-face { font-family:GraublauWeb; src:url(../fonts/GraublauWebBold.otf) format("opentype"); font-weight:bold }
+
+/* Body */
+
+body {
+	background: #eee;
+	color: #666;
+  font: 12px/18px 'Lucida Sans','Lucida Grande','Lucida Sans Unicode',sans-serif;
+}
+
+.container {
+  position: relative;
+}
+
+header {
+  margin: 18px 0;
+  padding: 0;
+}
+
+header h1, header p {
+	display: inline;
+}
+
+h1, h2, h3, h4, h5, h6, .logo, .beta {
+	font-family: GraublauWeb,Georgia,Times,'Times New Roman',serif;
+	font-weight: bold;
+}
+
+h1, h1 a:link, h1 a:visited, h1 a:hover, .logo {
+  color: #333;
+}
+
+h2, h3, h4, h5, h6 {
+  clear: left;
+  color: #666;
+}
+
+.beta {
+  color: #c00;
+}
+
+#disclaimer {
+	margin: 18px 0 0 0;
+	font-style: italic;
+}
+
+nav {
+	background: #666;
+	color: #fff;
+	font-size: 16px;
+	line-height: 36px;
+}
+
+nav a:link, nav a:visited {
+  color: #fff;
+}
+
+nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li {
+	display: inline;
+	padding: 0 12px;
+	height: 36px;
+	border-right: 1px dotted #fff;
+	text-shadow: #000 1px 1px 5px;  
+}
+
+nav ul li:last-child {
+  border-right: none;
+}
+
+nav ul li.current {
+  font-weight: bold;
+}
+
+aside {
+	background-color: #ddd;
+}
+
+#content {
+	margin: 18px 10px 18px 0;
+}
+
+footer {
+	background: #eee;
+	text-align: center;
+}
+
+/* Liens */
+
+a:link, a:visited {
+	text-decoration: none;
+}
+
+a:link {
+	color: #069;
+}
+
+a:visited {
+	color: #09c;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+input, select {
+	color: #06c;
+}
+
+input[type=submit] {
+	font-weight: bold;
+	color: #fff;
+	background: #0063DC;
+	border: 1px solid;
+	border-top-color: #7CBAFF;
+	border-right-color: #2854A7;
+	border-bottom-color: #2854A7;
+	border-left-color: #7CBAFF;
+}
+
+/* Thumbnails galleries */
+
+ol.gallery {
+	list-style: none;
+}
+
+ol.gallery li {
+	float: left;
+	position: relative;
+	border: 0;
+	margin: 0;
+	padding: 2px;
+	width: 270px;
+	height: 280px;
+	text-align: center;
+}
+
+ol.gallery li a img {
+	margin: 0;
+	padding: 0;
+	border: solid 1px #000;
+	-moz-box-shadow: 1px 1px 5px #000;
+	-webkit-box-shadow: 1px 1px 5px #000;
+	-khtml-box-shadow: 1px 1px 5px #000;
+	box-shadow: 1px 1px 5px #000;
+}
+
+/* Config */
+
+div.config {
+	text-align: center;
+}
+
+/* Pager */
+
+div.pager {
+	clear: left;
+	text-align: center;
+	margin:  18px 0;
+}
+
+div.pager a, div.pager a:visited {
+	padding: 2px 6px;
+	border: solid 1px #ddd;
+	text-decoration: none;
+}
+
+div.pager strong {
+	padding: 2px 6px;
+	border: none;
+}
+
+div.pager a:hover {
+	color: #fff;
+	background: #0063dc;
+	border-color: #036;
+	text-decoration: none;
+}
+
+div.pager span.num {
+	color: #999;
+}
+
+/* Ajustement sur styles Blueprint */
+
+.box {
+  background: none;
+}
