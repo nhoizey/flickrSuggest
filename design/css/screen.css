@@ -78,10 +78,6 @@ nav ul li.current {
   font-weight: bold;
 }
 
-aside {
-	background-color: #ddd;
-}
-
 #content {
 	margin: 18px 10px 18px 0;
 }
@@ -107,21 +103,6 @@ a:visited {
 
 a:hover {
 	text-decoration: underline;
-}
-
-input, select {
-	color: #06c;
-}
-
-input[type=submit] {
-	font-weight: bold;
-	color: #fff;
-	background: #0063DC;
-	border: 1px solid;
-	border-top-color: #7CBAFF;
-	border-right-color: #2854A7;
-	border-bottom-color: #2854A7;
-	border-left-color: #7CBAFF;
 }
 
 /* Thumbnails galleries */
@@ -161,12 +142,6 @@ ol.gallery li .status {
   width: 100%;
 }
 
-/* Config */
-
-div.config {
-	text-align: center;
-}
-
 /* Pager */
 
 div.pager {
@@ -197,7 +172,7 @@ div.pager span.num {
 	color: #999;
 }
 
-/* Ajustement sur styles Blueprint */
+/* Remove Blueprint's default blue background */
 
 .box {
   background: none;
