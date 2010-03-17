@@ -151,6 +151,16 @@ ol.gallery li a img {
 	box-shadow: 1px 1px 5px #000;
 }
 
+ol.gallery li .status {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  text-align: center;
+  color: #000;
+  text-shadow: #fff 2px 2px 1px;
+  width: 100%;
+}
+
 /* Config */
 
 div.config {

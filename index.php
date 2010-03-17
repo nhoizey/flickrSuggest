@@ -1,11 +1,11 @@
 <?php
-$nb_favs = defined('BROWSE_MIN_NEIGHBOURS') ? BROWSE_MIN_NEIGHBOURS : 5;
-$nb = defined('BROWSE_PER_PAGE') ? BROWSE_PER_PAGE : 15;
-
 require_once 'inc/init.inc.php';
 require_once 'inc/layout_page_top.inc.php';
 require_once 'inc/photo.inc.php';
 require_once 'inc/favorites.inc.php';
+
+$nb_favs = defined('BROWSE_MIN_NEIGHBOURS') ? BROWSE_MIN_NEIGHBOURS : 5;
+$nb = defined('BROWSE_PER_PAGE') ? BROWSE_PER_PAGE : 15;
 
 if (isset($_GET['page']) && intval($_GET['page']) > 0) {
     $page = intval($_GET['page']);
