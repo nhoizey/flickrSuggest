@@ -25,6 +25,12 @@ The tables must be created in the database with the "flickrsuggest.sql" script.
 
 After install, you need to copy "inc/config-sample.inc.php" to "inc/config.inc.php" and edit it with your info.
 
+You may need to adjust the "Resource Limits" section of your php.ini PHP configuration file:
+
+    max_execution_time = 600
+    memory_limit = 128M
+
+
 ## Credits
 
 flickrSuggest has been created by [Nicolas Hoizey](http://www.gasteroprod.com/), which is also (of course) a [Flickr user](http://www.flickr.com/photos/nicolas-hoizey/).

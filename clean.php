@@ -1,4 +1,6 @@
 <?php
+require_once 'inc/init.inc.php';
+
 $GLOBALS['delai'] = 1;
 $GLOBALS['nb'] = 0;
 
@@ -6,12 +8,14 @@ echo '<p>Cleaning cache files... '."\n"; flush();
 cleanDir('./cache/');
 echo $GLOBALS['nb'].' files removed!</p>'."\n"; flush();
 
-echo '<p>Cleaning data... '."\n"; flush();
-require_once 'inc/init.inc.php';
+echo '<p>Cleaning favorites from ignored photos... '."\n"; flush();
 $GLOBALS['db']->query("DELETE FROM favorites WHERE photo_id IN (SELECT photo_id FROM ignored)");
+
+echo '<p>Cleaning favorites from my favorite photos... '."\n"; flush();
 $GLOBALS['db']->query("DELETE FROM favorites WHERE photo_id IN (SELECT photo_id FROM photos)");
-$favs = $GLOBALS['db']->getAll("SELECT DISTINCT photo_id, count(*) AS nb2 FROM favorites WHERE nb=1 GROUP BY photo_id HAVING nb2 > 1 ORDER BY nb2 DESC LIMIT 0,20");
-//echo '<pre>'.print_r($favs, true).'</pre>';
+
+$favs = $GLOBALS['db']->getAll("SELECT DISTINCT photo_id, count(*) AS nb2 FROM favorites WHERE nb=1 GROUP BY photo_id HAVING nb2 > 1");
+echo '<p>Updating '.count($favs).' favorites counts... '."\n"; flush();
 foreach($favs as $fav) {
   $GLOBALS['db']->query("UPDATE favorites SET nb=".$fav['nb2']." WHERE photo_id='".$fav['photo_id']."'");
 }

@@ -21,48 +21,37 @@ function addUser($user_nsid) {
   global $db;
 
   $result = $db->query("INSERT INTO users (user_nsid, date_updated) VALUES ('".$user_nsid."', 0)");
-  if (PEAR::isError($result)) {
-    return 0;
-  } else {
-    return 1;
-  }
+  return !PEAR::isError($result);
 }
 
 function addPhoto($photo_id, $date_faved) {
   global $db;
 
-  $result = $db->query("INSERT INTO photos (photo_id, date_updated, date_faved) VALUES ('".$photo_id."', 0, ".$date_faved.")");
-  if (PEAR::isError($result)) {
-    return 0;
-  } else {
+  if ($photo_id != ''
+      && $db->getOne("SELECT COUNT(*) FROM photos WHERE photo_id = '".$photo_id."'") == 0) {
+    $db->query("INSERT INTO photos (photo_id, date_updated, date_faved) VALUES ('".$photo_id."', 0, ".$date_faved.")");
     // Remove it from others favs and from ignored
     $db->query("DELETE FROM favorites WHERE photo_id = '".$photo_id."'");
     $db->query("DELETE FROM ignored WHERE photo_id = '".$photo_id."'");
     return 1;
+  } else {
+    return 0;
   }
 }
 
 function addFav($user_nsid, $photo_id, $date_faved) {
   global $db;
 
-  if ($user_nsid != '' && $photo_id != '') {
-    $nb = $db->getOne("SELECT COUNT(*) AS nb FROM favorites WHERE user_nsid = '".$user_nsid."' AND photo_id = '".$photo_id."'");
-    if (!PEAR::isError($nb) && $nb == 0) {
-      $result = $db->query("INSERT INTO favorites (user_nsid, photo_id, date_faved) VALUES ('".$user_nsid."', '".$photo_id."', ".$date_faved.")");
-      if (PEAR::isError($result)) {
-        return 0;
-      } else {
-        $nb = $db->getOne("SELECT COUNT(*) AS nb FROM favorites WHERE photo_id = '".$photo_id."'");
-        $db->query("UPDATE favorites SET nb = ".$nb." WHERE photo_id = '".$photo_id."'");
-        return 1;
-      }
-    } else {
-      return 0;
-    }
+  if ($user_nsid != ''
+    && $photo_id != ''
+    && $db->getOne("SELECT COUNT(*) FROM photos WHERE photo_id = '".$photo_id."'") == 0
+    && $db->getOne("SELECT COUNT(*) FROM ignored WHERE photo_id = '".$photo_id."'") == 0
+    && $db->getOne("SELECT COUNT(*) FROM favorites WHERE user_nsid = '".$user_nsid."' AND photo_id = '".$photo_id."'") == 0) {
+    $db->query("INSERT INTO favorites (user_nsid, photo_id, date_faved) VALUES ('".$user_nsid."', '".$photo_id."', ".$date_faved.")");
+    $nb = $db->getOne("SELECT COUNT(*) AS nb FROM favorites WHERE photo_id = '".$photo_id."'");
+    $db->query("UPDATE favorites SET nb = ".$nb." WHERE photo_id = '".$photo_id."'");
+    return 1;
   } else {
-    if (SHOW_DEBUG) {
-      echo '<p>Erreur ajout de favori avec $user_nsid = "'.$user_nsid.'" et $photo = "'.$photo_id.'".';
-    }
     return 0;
   }
 }
@@ -111,7 +100,7 @@ function updateFavsFromUser($user_nsid, $page = 1) {
     $nb_favs = 0;
   }
 
-  $response = $flickr->callMethod('flickr.favorites.getPublicList', array('email' => FLICKR_ACCOUNT_EMAIL, 'password' => FLICKR_ACCOUNT_PASSWORD, 'user_id' => $user_nsid, 'per_page' => 10, 'page' => $page, 'min_fave_date' => $lastFav));
+  $response = $flickr->callMethod('flickr.favorites.getPublicList', array('email' => FLICKR_ACCOUNT_EMAIL, 'password' => FLICKR_ACCOUNT_PASSWORD, 'user_id' => $user_nsid, 'per_page' => 50, 'page' => $page, 'min_fave_date' => $lastFav));
   if ($response && $response->attributes['stat'] == 'ok') {
     $data = $response->getNodeAt('photos');
     $pages = intval($data->attributes['pages']);
@@ -132,9 +121,9 @@ function updateFavsFromUser($user_nsid, $page = 1) {
         } else {
           if (SHOW_DEBUG) {
             echo '<h4>Photo num '.$num_fav.' has no id! (previous one was '.$photo_id.')</h4>'."\n";
-            echo '<p>user_id => '.$user_nsid.', per_page => 10, page => '.$page.', min_fave_date => '.$lastFav.'</p>'."\n";
-            echo '<pre>'.print_r($child, true).'<hr />'."\n"; flush();
-            echo '<pre>'.print_r($data, true).'<hr />'."\n"; flush();
+            echo '<p>user_id => '.$user_nsid.', per_page => 50, page => '.$page.', min_fave_date => '.$lastFav.'</p>'."\n";
+            echo '<pre>'.print_r($child, true).'</pre><hr />'."\n"; flush();
+            //echo '<pre>'.print_r($data, true).'</pre><hr />'."\n"; flush();
           }
         }
       }
@@ -144,6 +133,8 @@ function updateFavsFromUser($user_nsid, $page = 1) {
     } elseif ($user_nsid != FLICKR_USER_NSID) {
       $db->query("REPLACE INTO users (user_nsid, date_updated) VALUES ('".$user_nsid."', ".time().")");
     }
+  } elseif (SHOW_DEBUG) {
+    var_dump($response);
 	}
   return $nb_favs;
 }
@@ -189,32 +180,54 @@ function updateUsersFromFav($photo_id, $page = 1)
     $nb_users = 0;
   }
 
-  $response = $flickr->callMethod('flickr.photos.getFavorites', array('email' => FLICKR_ACCOUNT_EMAIL, 'password' => FLICKR_ACCOUNT_PASSWORD, 'photo_id' => $photo_id, 'per_page' => 10, 'page' => $page));
-  if ($response && $response->attributes['stat'] == 'ok') {
-    $data = $response->getNodeAt('photo');
-    $pages = intval($data->attributes['pages']);
-    foreach ($data->children as $child) {
-      if ($child->name == 'person') {
-        $num_user++;
-        $user_nsid = $child->attributes['nsid'];
-        $date_faved = $child->attributes['favedate'];
-        if ($date_faved < $lastFav) {
-          $db->query("UPDATE photos SET date_updated = ".time()." WHERE photo_id = '".$photo_id."'");
-          return $nb_users;
-        } elseif ($user_nsid != FLICKR_USER_NSID) {
-          if (addUser($user_nsid)) {
-    				$nb_users++;
-          }
-  				addFav($user_nsid, $photo_id, $date_faved);
-    		}
+  $response = $flickr->callMethod('flickr.photos.getFavorites', array('email' => FLICKR_ACCOUNT_EMAIL, 'password' => FLICKR_ACCOUNT_PASSWORD, 'photo_id' => $photo_id, 'per_page' => 50, 'page' => $page));
+  if ($response) {
+    if ($response->attributes['stat'] == 'ok') {
+      $data = $response->getNodeAt('photo');
+      $pages = intval($data->attributes['pages']);
+      foreach ($data->children as $child) {
+        if ($child->name == 'person') {
+          $num_user++;
+          $user_nsid = $child->attributes['nsid'];
+          $date_faved = $child->attributes['favedate'];
+          if ($date_faved < $lastFav) {
+            $db->query("UPDATE photos SET date_updated = ".time()." WHERE photo_id = '".$photo_id."'");
+            return $nb_users;
+          } elseif ($user_nsid != FLICKR_USER_NSID) {
+            if (addUser($user_nsid)) {
+      				$nb_users++;
+            }
+    				addFav($user_nsid, $photo_id, $date_faved);
+      		}
+        }
+      }
+      if ($page < $pages) {
+        updateUsersFromFav($photo_id, $page + 1);
+      } else {
+        $db->query("UPDATE photos SET date_updated = ".time()." WHERE photo_id = '".$photo_id."'");
+      }
+  	} else {
+      if (SHOW_DEBUG) {
+    	  $errorCode = $flickr->getErrorCode();
+    	  $errorMessage = $flickr->getErrorMessage();
+        echo '<p>Error '.$errorCode.': '.$errorMessage.'</p>';
       }
     }
-    if ($page < $pages) {
-      updateUsersFromFav($photo_id, $page + 1);
-    } else {
-      $db->query("UPDATE photos SET date_updated = ".time()." WHERE photo_id = '".$photo_id."'");
+  } else {
+    if (SHOW_DEBUG) {
+      echo '<p>Error: No response for flickr.photos.getFavorites with per_page=50 and page='.$page.'</p>';
+      echo '<p>HTTP code: '.$flickr->_http_code.'</p>';
+      echo '<p>HTTP head: '.print_r($flickr->_http_head, true).'</p>';
+      echo '<p>HTTP body: '.htmlspecialchars($flickr->_http_body).'</p>';
+      $errorCode = $flickr->getErrorCode();
+      $errorMessage = $flickr->getErrorMessage();
+      echo '<p>Error '.$errorCode.': '.$errorMessage.'</p>';
+      var_dump($response);
     }
-	}
+    // We should count errors and remove photo after nth
+    $db->query("UPDATE photos SET date_updated = ".time()." WHERE photo_id = '".$photo_id."'");
+    return 0;
+  }
   
   return $nb_users;
 }

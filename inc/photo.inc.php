@@ -31,6 +31,7 @@ function getPhoto($photoId)
                         $photo['75x75'] = 'http://static.flickr.com/'.$server.'/'.$photo['id'].'_'.$secret.'_s.jpg';
                         $photo['thumbnail'] = 'http://static.flickr.com/'.$server.'/'.$photo['id'].'_'.$secret.'_t.jpg';
                         $photo['small'] = 'http://static.flickr.com/'.$server.'/'.$photo['id'].'_'.$secret.'_m.jpg';
+                        $photo['medium'] = 'http://static.flickr.com/'.$server.'/'.$photo['id'].'_'.$secret.'.jpg';
                         $photo['url'] = 'http://www.flickr.com/photos/'.$photo['owner']['NSID'].'/'.$photo['id'].'/';
                         $cachePhoto->save(serialize($photo));
                     } else {
@@ -72,7 +73,7 @@ function getPhoto($photoId)
     return $photo;
 }
 
-function getPhotoHTML($photo_id, $nb = 0)
+function getPhotoHTML($photo_id, $nb = 0, $size = 'small')
 {
     $photo = getPhoto($photo_id);
     if (!is_array($photo)) {

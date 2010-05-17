@@ -30,6 +30,7 @@
           <?php
           $menu = array(
               '/index.php' => 'Home',
+              '/quickreview.php' => 'Quick Review',
               '/update.php' => 'Update',
               'http://www.flickr.com/groups/flickrsuggest/' => 'Flickr group',
               'http://www.flickr.com/services/apps/72157623634339128/' => 'Flickr App Garden',
