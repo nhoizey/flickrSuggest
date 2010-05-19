@@ -86,7 +86,9 @@ function getPhotoHTML($photo_id, $nb = 0, $size = 'small')
         $str = '<li>';
         $str .= '<a href="'.$photo['url'].'" title="'.$photo['title'].', by '.$photo['owner']['username'].'"><img src="'.$photo['small'].'" /></a>';
         if ($nb != 0) {
-          $str .= '<p>Faved by <strong>'.$nb.'</strong> neighbours - <a href="/ignore.php?photo_id='.$photo_id.'" class="ignore">ignore</a></p>';
+          $str .= '<p>Faved by <strong>'.$nb.'</strong> neighbours';
+          $str .= ' - <a href="/ignore.php?photo_id='.$photo_id.'" class="ignore">ignore</a>';
+//          $str .= ' - <a href="/favor.php?photo_id='.$photo_id.'" class="favor">favor</a></p>';
         }
         $str .= '</li>';
     }

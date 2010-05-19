@@ -22,7 +22,9 @@ if (isset($_GET['photo_id']) && preg_match("/^[0-9]+$/", $_GET['photo_id'])) {
 }
 if (isset($_GET['mode']) && $_GET['mode'] == 'ajax') {
   echo $success;
-} else {
+} elseif (1 === $success) {
   header('Location: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/'));
+} else {
+  echo $success;
 }
 ?>
