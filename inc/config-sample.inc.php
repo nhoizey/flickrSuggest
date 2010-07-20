@@ -1,11 +1,14 @@
 <?php
 // Your identification
-define('FLICKR_USER_NSID', 'xxx'); // Nicolas Hoizey
+define('FLICKR_USER_NSID', '');
 define('FLICKR_ACCOUNT_EMAIL', 'someone@example.com');
 define('FLICKR_ACCOUNT_PASSWORD', 'password');
 
 // Your Flickr API key
-define('FLICKR_APIKEY', 'xxx');
+define('FLICKR_APIKEY', '');
+
+// Your auth token, for direct favoring
+define('FLICKR_AUTH_TOKEN', '');
 
 // DSN for the database
 define('DSN', 'mysql://login:password@host/database');

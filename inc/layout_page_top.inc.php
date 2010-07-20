@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="design/css/blueprint/screen.css" type="text/css" media="screen, projection">
 <link rel="stylesheet" href="design/css/blueprint/print.css" type="text/css" media="print">	
 <!--[if lt IE 8]><link rel="stylesheet" href="design/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
-<link rel="stylesheet" type="text/css" media="screen, projection" href="design/css/screen.css" title="flickrate" />
+<link rel="stylesheet" type="text/css" media="screen, projection" href="design/css/screen.css" title="flickrSuggest" />
 <link rel="stylesheet" type="text/css" media="print" href="design/css/print.css" />
 <script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
 </head>
@@ -29,12 +29,11 @@
       <ul>
           <?php
           $menu = array(
-              '/index.php' => 'Home',
+              '/' => 'Home',
               '/quickreview.php' => 'Quick Review',
               '/update.php' => 'Update',
               'http://www.flickr.com/groups/flickrsuggest/' => 'Flickr group',
-              'http://www.flickr.com/services/apps/72157623634339128/' => 'Flickr App Garden',
-              'http://flickrate.gasteroprod.com/' => 'Enhance Flickr favorites with flickRate'
+              'http://www.flickr.com/services/apps/72157623634339128/' => 'Flickr App Garden'
               );
           foreach($menu as $url => $label) {
               if ($url == '-') {
