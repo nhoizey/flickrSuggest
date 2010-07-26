@@ -4,7 +4,7 @@
 #
 # Host: localhost (MySQL 5.1.44)
 # Database: flickrsuggest
-# Generation Time: 2010-07-26 08:05:49 +0200
+# Generation Time: 2010-07-26 11:57:59 +0200
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -56,7 +56,9 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_nsid` varchar(100) NOT NULL DEFAULT '',
   `date_updated` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_nsid`)
+  `ignored` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_nsid`),
+  KEY `next` (`user_nsid`,`ignored`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
