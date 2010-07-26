@@ -11,10 +11,7 @@ echo $GLOBALS['nb'].' files removed!</p>'."\n"; flush();
 echo '<p>Cleaning favorites from ignored photos... '."\n"; flush();
 $GLOBALS['db']->query("DELETE FROM favorites WHERE photo_id IN (SELECT photo_id FROM ignored)");
 
-echo '<p>Cleaning favorites from my favorite photos... '."\n"; flush();
-$GLOBALS['db']->query("DELETE FROM favorites WHERE photo_id IN (SELECT photo_id FROM photos)");
-
-$favs = $GLOBALS['db']->getAll("SELECT DISTINCT photo_id, count(*) AS nb2 FROM favorites WHERE nb=1 GROUP BY photo_id HAVING nb2 > 1");
+$favs = $GLOBALS['db']->getAll("SELECT DISTINCT photo_id, count(*) AS nb2 FROM favorites WHERE user_nsid != '".FLICKR_USER_NSID."' AND nb=1 GROUP BY photo_id HAVING nb2 > 1");
 echo '<p>Updating '.count($favs).' favorites counts... '."\n"; flush();
 foreach($favs as $fav) {
   $GLOBALS['db']->query("UPDATE favorites SET nb=".$fav['nb2']." WHERE photo_id='".$fav['photo_id']."'");

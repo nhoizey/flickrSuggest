@@ -10,12 +10,15 @@ $nb_favs = defined('BROWSE_MIN_NEIGHBOURS') ? BROWSE_MIN_NEIGHBOURS : 5;
 <h2>Quick Review</h2>
 
 <?php
-$total = $db->getOne("SELECT COUNT(DISTINCT photo_id) FROM favorites WHERE nb >= ".$nb_favs);
+$myFavs = implode(', ', $db->getCol("SELECT photo_id FROM favorites WHERE user_nsid = '".FLICKR_USER_NSID."'"));
+$total = $db->getOne("SELECT COUNT(DISTINCT photo_id) FROM favorites WHERE nb >= ".$nb_favs." AND photo_id NOT IN (".$myFavs.")");
 $num = rand(0, $total - 1);
-$data = $db->getRow("SELECT DISTINCT photo_id, nb FROM favorites WHERE nb >= ".$nb_favs." LIMIT ".$num.",1");
+
+$data = $db->getRow("SELECT DISTINCT photo_id, nb FROM favorites WHERE nb >= ".$nb_favs." AND photo_id NOT IN (".$myFavs.") LIMIT ".$num.",1");
 $photo_id = $data['photo_id'];
 $nb = $data['nb'];
 $photo = getPhoto($photo_id);
+
 if (!is_array($photo)) {
   if ($photo == 'removed') {
     echo '<img src="/img/photo_gone.gif" width="75" height="75" alt="Removed" />';

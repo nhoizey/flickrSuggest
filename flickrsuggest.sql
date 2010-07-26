@@ -1,10 +1,10 @@
-﻿# Sequel Pro dump
-# Version 1630
+# Sequel Pro dump
+# Version 2210
 # http://code.google.com/p/sequel-pro
 #
-# Host: localhost (MySQL 5.0.41)
+# Host: localhost (MySQL 5.1.44)
 # Database: flickrsuggest
-# Generation Time: 2010-03-16 22:12:50 +0100
+# Generation Time: 2010-07-26 08:05:49 +0200
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -23,12 +23,15 @@
 DROP TABLE IF EXISTS `favorites`;
 
 CREATE TABLE `favorites` (
-  `user_nsid` varchar(100) NOT NULL default '',
-  `photo_id` varchar(20) NOT NULL default '',
-  `date_faved` int(11) NOT NULL default '0',
-  `nb` int(11) NOT NULL default '1',
-  PRIMARY KEY  (`user_nsid`,`photo_id`),
-  KEY `photo_id` (`photo_id`)
+  `user_nsid` varchar(100) NOT NULL DEFAULT '',
+  `photo_id` varchar(20) NOT NULL DEFAULT '',
+  `date_faved` int(11) NOT NULL DEFAULT '0',
+  `nb` int(11) NOT NULL DEFAULT '1',
+  `checked` int(1) NOT NULL DEFAULT '0',
+  `date_updated` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_nsid`,`photo_id`),
+  KEY `photo_id` (`photo_id`),
+  KEY `checked` (`checked`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -39,23 +42,8 @@ CREATE TABLE `favorites` (
 DROP TABLE IF EXISTS `ignored`;
 
 CREATE TABLE `ignored` (
-  `photo_id` varchar(20) NOT NULL default '',
-  PRIMARY KEY  (`photo_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
-# Dump of table photos
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `photos`;
-
-CREATE TABLE `photos` (
-  `photo_id` varchar(20) NOT NULL default '',
-  `date_updated` int(11) NOT NULL default '0',
-  `date_faved` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`photo_id`),
-  KEY `date_faved` (`date_faved`)
+  `photo_id` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`photo_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -66,9 +54,9 @@ CREATE TABLE `photos` (
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `user_nsid` varchar(100) NOT NULL default '',
-  `date_updated` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`user_nsid`)
+  `user_nsid` varchar(100) NOT NULL DEFAULT '',
+  `date_updated` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_nsid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 

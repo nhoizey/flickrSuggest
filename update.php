@@ -19,7 +19,7 @@ if ($olderUser = $db->getOne("SELECT user_nsid FROM users WHERE user_nsid != '".
   echo '<p>'.$nb.' fav'.($nb > 1 ? 's' : '').' added!</p>'."\n"; flush();
 }
 
-if ($olderPhoto = $db->getOne("SELECT photo_id FROM photos ORDER BY date_updated LIMIT 0,1")) {
+if ($olderPhoto = $db->getOne("SELECT photo_id FROM favorites WHERE user_nsid = '".FLICKR_USER_NSID."' ORDER BY date_updated LIMIT 0,1")) {
   echo '<h3>Updating users who have favorited '.$olderPhoto.'...</h3>'."\n"; flush();
   echo '<ol class="gallery">'.getPhotoHTML($olderPhoto).'</ol>'."\n"; flush();
   $nb = updateUsersFromFav($olderPhoto);
@@ -30,9 +30,9 @@ require 'inc/close.inc.php';
 echo '<p>Done in '.(time() - $begin).' seconds.</p>';
 ?>
 
-<p>This page will self refresh in 30 seconds...</p>
+<p>This page will self refresh in 10 seconds...</p>
 <script language="javascript">
-setTimeout("window.location.reload()", 1000*30);
+setTimeout("window.location.reload()", 1000*10);
 </script>
 
 <?php

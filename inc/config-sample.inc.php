@@ -16,6 +16,9 @@ define('DSN', 'mysql://login:password@host/database');
 // Lifetime of cache for some of the calls to the API
 define('CACHE_LIFETIME_PHOTO', 60*60*24*7);
 
+// Parameter for the neighbourhood
+define('NEIGHBOURHOOD_DISTANCE', 5); // Number of common favorites
+
 // Parameters for browsing the suggestions
 define('BROWSE_MIN_NEIGHBOURS', 20);
 define('BROWSE_PER_PAGE', 15);
