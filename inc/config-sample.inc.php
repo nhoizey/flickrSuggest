@@ -16,6 +16,9 @@ define('CACHE_LIFETIME_PHOTO', 60*60*24*7);
 // Favorites from people with less than NEIGHBOURHOOD_DISTANCE favorites common with mine will not be taken into account
 define('NEIGHBOURHOOD_DISTANCE', 5); // Number of common favorites
 
+// People with more than IGNORED_DISTANCE ignored photos will not be taken into account (NEIGHBOURHOOD_DISTANCE is considered first)
+define('IGNORED_DISTANCE', 20); // Number of ignored photos
+
 // Parameters for browsing the suggestions
 define('BROWSE_MIN_NEIGHBOURS', 20);
 define('BROWSE_PER_PAGE', 15);

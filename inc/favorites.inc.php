@@ -141,6 +141,10 @@ function updateFavsFromUser($user_nsid, $page = 1) {
           || $db->getOne("SELECT COUNT(photo_id) FROM favorites  WHERE user_nsid = '".$user_nsid."' AND photo_id IN (SELECT photo_id FROM favorites WHERE user_nsid = '".FLICKR_USER_NSID."')") >= NEIGHBOURHOOD_DISTANCE) {
         $db->query("UPDATE favorites SET checked=1 WHERE user_nsid = '".$user_nsid."'");
       } else {
+        if ($user_nsid != FLICKR_USER_NSID
+            && $db->getOne("SELECT COUNT(photo_id) FROM favorites  WHERE user_nsid = '".$user_nsid."' AND photo_id IN (SELECT photo_id FROM ignored)") >= IGNORED_DISTANCE) {
+          $db->query("UPDATE users SET ignored=1 WHERE user_nsid = '".$user_nsid."'");
+        }
         $db->query("DELETE FROM favorites WHERE user_nsid = '".$user_nsid."'");
         $nb_favs = 0;
       }

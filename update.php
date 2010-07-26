@@ -13,7 +13,7 @@ echo '<h3>Updating <a href="http://www.flickr.com/photos/'.FLICKR_USER_NSID.'/fa
 $nb = updateFavsFromUser(FLICKR_USER_NSID);
 echo '<p>'.$nb.' fav'.($nb > 1 ? 's' : '').' added!</p>'."\n"; flush();
 
-if ($olderUser = $db->getOne("SELECT user_nsid FROM users WHERE user_nsid != '".FLICKR_USER_NSID."' ORDER BY date_updated LIMIT 0,1")) {
+if ($olderUser = $db->getOne("SELECT user_nsid FROM users WHERE user_nsid != '".FLICKR_USER_NSID."' AND ignored=0 ORDER BY date_updated LIMIT 0,1")) {
   echo '<h3>Updating <a href="http://www.flickr.com/photos/'.$olderUser.'/favorites/">'.$olderUser.'\'s favorites</a>...</h3>'."\n"; flush();
   $nb = updateFavsFromUser($olderUser);
   echo '<p>'.$nb.' fav'.($nb > 1 ? 's' : '').' added!</p>'."\n"; flush();
