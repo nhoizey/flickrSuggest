@@ -14,5 +14,5 @@ $(document).ready(function() {
     });
     return false;
   });
-  $('ol.gallery').prevAll('h2').after('<p style="float: right;"><a href="javascript:$(\'.ignore\').click();">ignore all</a></p>');
+  $('.pager').before('<p style="float: right; clear: left;"><a href="javascript:$(\'.ignore\').click();">ignore all</a></p>');
 });
