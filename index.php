@@ -38,6 +38,7 @@ $pager .= ' <span class="num">('.$total.' photos)</span></div>';
 ?>
 
 <h2>Suggestions</h2>
+<p>These suggestions are based on favorites from <?php echo ($db->getOne("SELECT COUNT(user_nsid) FROM users WHERE ignored=0") - 1); ?> users that share at least <?php echo NEIGHBOURHOOD_DISTANCE; ?> favorites with me. <?php echo $db->getOne("SELECT COUNT(user_nsid) FROM users WHERE ignored=1"); ?> users are ignored because they have at least <?php echo IGNORED_DISTANCE; ?> favorites that I ignored.</p>
 <?php
 echo $pager;
 $suggestions = $db->getAll("SELECT DISTINCT photo_id, nb FROM favorites WHERE nb >= ".$nb_favs." AND photo_id NOT IN (".$myFavs.") ORDER BY nb DESC, photo_id LIMIT ".(($page - 1) * $nb).",".$nb);
