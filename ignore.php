@@ -2,19 +2,24 @@
 $success = 0;
 if (isset($_GET['photo_id']) && preg_match("/^[0-9]+$/", $_GET['photo_id'])) {  
   require_once 'inc/init.inc.php';
-  $nb = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM ignored WHERE photo_id='".$_GET['photo_id']."'");
+  $nb = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM ignored WHERE photo_id='".$_GET['photo_id']."'");  
   if ($nb == 1) {
     $success = 'This photo is already ignored!';
   } else {
-    $return = $GLOBALS['db']->query("INSERT INTO ignored (photo_id) VALUES ('".$_GET['photo_id']."')");
-    if (PEAR::isError($return)) {
-      $success = $return->getMessage();
+    $isFav = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM favorites WHERE user_nsid='".FLICKR_USER_NSID."' AND photo_id='".$_GET['photo_id']."'");
+    if ($isFav == 1) {
+      $success = 'Can\'t ignore a favorited photo!';
     } else {
-      $return = $GLOBALS['db']->query("DELETE FROM favorites WHERE photo_id='".$_GET['photo_id']."'");
+      $return = $GLOBALS['db']->query("INSERT INTO ignored (photo_id) VALUES ('".$_GET['photo_id']."')");
       if (PEAR::isError($return)) {
         $success = $return->getMessage();
       } else {
-        $success = 1;
+        $return = $GLOBALS['db']->query("DELETE FROM favorites WHERE photo_id='".$_GET['photo_id']."'");
+        if (PEAR::isError($return)) {
+          $success = $return->getMessage();
+        } else {
+          $success = 1;
+        }
       }
     }
   }
