@@ -119,10 +119,8 @@ function updateFavsFromUser($user_nsid, $page = 1) {
         if (isset($child->attributes['id']) && $child->attributes['id'] != '') {
           $photo_id = $child->attributes['id'];
           $date_faved = $child->attributes['date_faved'];
-          if ($db->getOne("SELECT COUNT(*) FROM ignored WHERE photo_id = '".$photo_id."'") == 0) {
-            if (addFav($user_nsid, $photo_id, $date_faved)) {
-              $nb_favs++;
-            }
+          if (addFav($user_nsid, $photo_id, $date_faved)) {
+            $nb_favs++;
           }
         } else {
           if (SHOW_DEBUG) {
@@ -232,6 +230,10 @@ function updateUsersFromFav($photo_id, $page = 1)
         echo '<p>Error '.$errorCode.': '.$errorMessage.'</p>';
       }
     }
+  } elseif ($flickr->getErrorCode() == 1) {
+    // Photo not found
+    $db->query("DELETE FROM favorites WHERE photo_id = '".$photo_id."'");
+    $db->query("DELETE FROM ignored WHERE photo_id = '".$photo_id."'");
   } else {
     if (SHOW_DEBUG) {
       echo '<p>Error: No response for flickr.photos.getFavorites with per_page=50 and page='.$page.'</p>';
