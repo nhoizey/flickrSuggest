@@ -9,6 +9,9 @@ $(document).ready(function() {
       if (data == '1') {
         $photo.animate({ opacity: 0 }, 1000, function() {
           $(this).remove();
+          if ($('.ignore').length == 0) {
+            location.reload(true);
+          }
         });
       } else {
         $photo.find('.status').html('<p><strong>Couldn\'t ignore this photo!</strong></p><p>Message:<br />' + data + '</p>');
