@@ -37,12 +37,13 @@ function addUser($user_nsid) {
   }
 }
 
-function addMyFav($photo_id, $date_faved) {
+function addMyFav($photo_id, $photographer_nsid, $date_faved) {
   global $db;
 
   if ($photo_id != ''
+      && $photographer_nsid != ''
       && $db->getOne("SELECT COUNT(*) FROM favorites WHERE user_nsid = '".FLICKR_USER_NSID."' AND photo_id = '".$photo_id."'") == 0) {
-    $db->query("INSERT INTO favorites (user_nsid, photo_id, date_faved) VALUES ('".FLICKR_USER_NSID."', '".$photo_id."', ".$date_faved.")");
+    $db->query("INSERT INTO favorites (user_nsid, photo_id, photographer_nsid, date_faved) VALUES ('".FLICKR_USER_NSID."', '".$photo_id."', '".$photographer_nsid."', ".$date_faved.")");
     // Remove it from ignored
     $db->query("DELETE FROM ignored WHERE photo_id = '".$photo_id."'");
     return 1;
@@ -51,16 +52,17 @@ function addMyFav($photo_id, $date_faved) {
   }
 }
 
-function addFav($user_nsid, $photo_id, $date_faved) {
+function addFav($user_nsid, $photo_id, $photographer_nsid, $date_faved) {
   global $db;
 
   if ($user_nsid == FLICKR_USER_NSID) {
-    return addMyFav($photo_id, $date_faved);
+    return addMyFav($photo_id, $photographer_nsid, $date_faved);
   } elseif ($user_nsid != ''
       && $photo_id != ''
+      && $photographer_nsid != ''
       && $db->getOne("SELECT COUNT(*) FROM ignored WHERE photo_id = '".$photo_id."'") == 0
       && $db->getOne("SELECT COUNT(*) FROM favorites WHERE user_nsid = '".$user_nsid."' AND photo_id = '".$photo_id."'") == 0) {
-    $result = $db->query("INSERT INTO favorites (user_nsid, photo_id, date_faved) VALUES ('".$user_nsid."', '".$photo_id."', ".$date_faved.")");
+    $result = $db->query("INSERT INTO favorites (user_nsid, photo_id, photographer_nsid, date_faved) VALUES ('".$user_nsid."', '".$photo_id."', '".$photographer_nsid."', ".$date_faved.")");
     $nb = $db->getOne("SELECT COUNT(*) AS nb FROM favorites WHERE photo_id = '".$photo_id."'");
     $result = $db->query("UPDATE favorites SET nb = ".$nb." WHERE photo_id = '".$photo_id."'");
     return 1;
@@ -118,8 +120,9 @@ function updateFavsFromUser($user_nsid, $page = 1) {
       if ($child->name == 'photo') {
         if (isset($child->attributes['id']) && $child->attributes['id'] != '') {
           $photo_id = $child->attributes['id'];
+          $photographer_nsid = $child->attributes['owner'];
           $date_faved = $child->attributes['date_faved'];
-          if (addFav($user_nsid, $photo_id, $date_faved)) {
+          if (addFav($user_nsid, $photo_id, $photographer_nsid, $date_faved)) {
             $nb_favs++;
           }
         } else {
@@ -164,11 +167,13 @@ function updateUsersFromFav($photo_id, $page = 1)
   static $lastFav = null;
   static $num_user = null;
   static $nb_users = null;
+  static $photographer_nsid = null;
 
   if (!is_null($photo_id_prev) && $photo_id_prev != $photo_id) {
     $lastFav = null;
     $num_user = null;
     $nb_users = null;
+    $photographer_nsid = null;
   }
   $photo_id_prev = $photo_id;
 
@@ -194,6 +199,10 @@ function updateUsersFromFav($photo_id, $page = 1)
     $nb_users = 0;
   }
 
+  if (is_null($photographer_nsid)) {
+    $photographer_nsid = $db->getOne("SELECT photographer_nsid FROM favorites WHERE photo_id = '".$photo_id."' LIMIT 0,1");
+  }
+
   if (SHOW_DEBUG) {
     echo '<p><strong>API Request</strong></p><dl><dt>method</dt><dd>flickr.favorites.getPublicList</dd><dt>photo_id<dt><dd>'.$photo_id.'</dd><dt>per_page</dt><dd>50</dd><dt>page</dt><dd>'.$page.'</dd></dl>';
   }
@@ -214,7 +223,7 @@ function updateUsersFromFav($photo_id, $page = 1)
             if (addUser($user_nsid)) {
       				$nb_users++;
             }
-    				addFav($user_nsid, $photo_id, $date_faved);
+    				addFav($user_nsid, $photo_id, $photographer_nsid, $date_faved);
       		}
         }
       }

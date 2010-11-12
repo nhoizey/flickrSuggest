@@ -22,8 +22,9 @@ $(document).ready(function() {
     });
     return false;
   });
-  $('<p style="float: right; clear: left;"><a href="">ignore all</a></p>').insertBefore('.pager').find('a').bind('click', function () {
+  $('<p class="ignoreall"><a href="">ignore all</a></p>').insertBefore('.pager').find('a').bind('click', function () {
     $('.ignore').click();
+    $('.ignoreall').remove();
     return false;
   });
 });

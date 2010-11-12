@@ -30,6 +30,7 @@
           <?php
           $menu = array(
               '/' => 'Home',
+              '/suggestions.php' => 'Suggestions',
               '/quickreview.php' => 'Quick Review',
               '/update.php' => 'Update',
               'http://www.flickr.com/groups/flickrsuggest/' => 'Flickr group',

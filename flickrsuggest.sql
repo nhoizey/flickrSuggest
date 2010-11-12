@@ -1,10 +1,10 @@
 # Sequel Pro dump
-# Version 2210
+# Version 2492
 # http://code.google.com/p/sequel-pro
 #
 # Host: localhost (MySQL 5.1.44)
 # Database: flickrsuggest
-# Generation Time: 2010-07-26 11:57:59 +0200
+# Generation Time: 2010-09-29 21:30:46 +0200
 # ************************************************************
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `favorites`;
 CREATE TABLE `favorites` (
   `user_nsid` varchar(100) NOT NULL DEFAULT '',
   `photo_id` varchar(20) NOT NULL DEFAULT '',
+  `photographer_nsid` varchar(100) NOT NULL DEFAULT '',
   `date_faved` int(11) NOT NULL DEFAULT '0',
   `nb` int(11) NOT NULL DEFAULT '1',
   `checked` int(1) NOT NULL DEFAULT '0',

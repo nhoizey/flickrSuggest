@@ -144,32 +144,46 @@ ol.gallery li .status {
 
 /* Pager */
 
-div.pager {
+.pager {
 	clear: left;
 	text-align: center;
 	margin:  18px 0;
 }
 
-div.pager a, div.pager a:visited {
+.pager a, .pager a:visited, .params a, .params a:visited {
 	padding: 2px 6px;
 	border: solid 1px #ddd;
 	text-decoration: none;
 }
 
-div.pager strong {
+.pager strong, .params strong {
 	padding: 2px 6px;
 	border: none;
 }
 
-div.pager a:hover {
+.pager a:hover, .params a:hover {
 	color: #fff;
 	background: #0063dc;
 	border-color: #036;
 	text-decoration: none;
 }
 
-div.pager span.num {
+.pager span.num {
 	color: #999;
+}
+
+/* Parameters */
+
+.params {
+  line-height: 2em;
+  text-align: right;
+}
+
+/* Remove all links */
+
+.ignoreall {
+  clear: left;
+  float: right;
 }
 
 /* Remove Blueprint's default blue background */
