@@ -22,6 +22,13 @@ if ($page > $nbPages) {
 	$page = $nbPages;
 }
 $pager = '<div class="pager">Pages: ';
+if ($nbPages > 1) {
+  if ($page == 1) {
+  	$pager .= ' <strong>«</strong>';
+  } else {
+		$pager .= ' <a href="?nb='.$nb.'&page='.($page - 1).'">«</a>';
+  }
+}
 for ($i = 1; $i <= $nbPages; $i++) {
 	if ($i == 1 || $i == $nbPages || in_array(abs($i - $page), array(0, 1, 2, 3, 15, 75, 375))) {
 		if ($i == $page) {
@@ -32,6 +39,13 @@ for ($i = 1; $i <= $nbPages; $i++) {
 	} else {
 			$pager .= '#';
 	}
+}
+if ($nbPages > 1) {
+  if ($page == $nbPages) {
+  	$pager .= ' <strong>»</strong>';
+  } else {
+		$pager .= ' <a href="?nb='.$nb.'&page='.($page + 1).'">»</a>';
+  }
 }
 $pager = ereg_replace("#+", " ...", $pager);
 $pager .= ' <span class="num">('.$total.' photos)</span></div>';

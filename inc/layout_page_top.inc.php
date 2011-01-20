@@ -30,6 +30,7 @@
           <?php
           $menu = array(
               '/' => 'Home',
+              '/favorites.php' => 'Favorites',
               '/suggestions.php' => 'Suggestions',
               '/quickreview.php' => 'Quick Review',
               '/update.php' => 'Update',
