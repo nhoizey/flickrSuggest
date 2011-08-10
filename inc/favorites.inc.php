@@ -4,7 +4,7 @@ function id2nsid($user_id) {
   static $flickr = null;
 
   if (is_null($flickr)) {
-    $flickr =& new Flickr_API(array('api_key' => FLICKR_APIKEY));
+    $flickr = new Flickr_API(array('api_key' => FLICKR_APIKEY));
   }
 
 	$userResponse = $flickr->callMethod('flickr.urls.lookupUser', array('url' => 'http://www.flickr.com/photos/'.$user_id.'/'));
@@ -90,7 +90,7 @@ function updateFavsFromUser($user_nsid, $page = 1) {
   $user_nsid_prev = $user_nsid;
   
   if (is_null($flickr)) {
-    $flickr =& new Flickr_API(array('api_key' => FLICKR_APIKEY));
+    $flickr = new Flickr_API(array('api_key' => FLICKR_APIKEY));
   }
 
   if (is_null($lastFav)) {
@@ -178,7 +178,7 @@ function updateUsersFromFav($photo_id, $page = 1)
   $photo_id_prev = $photo_id;
 
   if (is_null($flickr)) {
-    $flickr =& new Flickr_API(array('api_key' => FLICKR_APIKEY));
+    $flickr = new Flickr_API(array('api_key' => FLICKR_APIKEY));
   }
 
   if (is_null($lastFav)) {

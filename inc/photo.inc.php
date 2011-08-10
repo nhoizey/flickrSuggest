@@ -10,7 +10,7 @@ function getPhoto($photoId)
             $photo = unserialize($photo);
         } else {
             include_once 'Flickr/API.php';
-            $flickr =& new Flickr_API(array('api_key' => FLICKR_APIKEY));
+            $flickr = new Flickr_API(array('api_key' => FLICKR_APIKEY));
             $response = $flickr->callMethod('flickr.photos.getInfo', array('photo_id' => $photoId));
             if ($response) {
                 if($response->attributes['stat'] == 'ok') {

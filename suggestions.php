@@ -47,7 +47,7 @@ if ($nbPages > 1) {
 		$pager .= ' <a href="?nb='.$nb.'&page='.($page + 1).'">»</a>';
   }
 }
-$pager = ereg_replace("#+", " ...", $pager);
+$pager = preg_replace("/#+/", " ...", $pager);
 $pager .= ' <span class="num">('.$total.' photos)</span></div>';
 ?>
 

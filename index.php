@@ -28,7 +28,7 @@ if ($total > 0) {
 <h3>Contacts suggestions</h3>
 <p>These contacts suggestions are users from which you have favorited the most photos, with a minimum of <?php echo CONTACTS_SUGGESTIONS_TRIGGER; ?>.</p>
 <?php
-$flickr =& new Flickr_API(array('api_key' => FLICKR_APIKEY));
+$flickr = new Flickr_API(array('api_key' => FLICKR_APIKEY));
 $contactsListResponse = $flickr->callMethod('flickr.contacts.getPublicList', array('email' => FLICKR_ACCOUNT_EMAIL, 'password' => FLICKR_ACCOUNT_PASSWORD, 'user_id' => FLICKR_USER_NSID, 'per_page' => 1000, 'page' => 1));
 $contactsString = '';
 if ($contactsListResponse && $contactsListResponse->attributes['stat'] == 'ok') {
