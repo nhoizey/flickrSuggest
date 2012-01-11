@@ -26,7 +26,7 @@ if ($nbPages > 1) {
   if ($page == 1) {
   	$pager .= ' <strong>«</strong>';
   } else {
-		$pager .= ' <a href="?nb='.$nb.'&page='.($page - 1).'">«</a>';
+		$pager .= ' <a href="?nb_favs='.$nb_favs.'&nb='.$nb.'&page='.($page - 1).'">«</a>';
   }
 }
 for ($i = 1; $i <= $nbPages; $i++) {
@@ -44,7 +44,7 @@ if ($nbPages > 1) {
   if ($page == $nbPages) {
   	$pager .= ' <strong>»</strong>';
   } else {
-		$pager .= ' <a href="?nb='.$nb.'&page='.($page + 1).'">»</a>';
+		$pager .= ' <a href="?nb_favs='.$nb_favs.'&nb='.$nb.'&page='.($page + 1).'">»</a>';
   }
 }
 $pager = preg_replace("/#+/", " ...", $pager);
