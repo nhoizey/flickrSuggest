@@ -28,13 +28,17 @@ if ($olderPhoto = $db->getOne("SELECT photo_id FROM favorites WHERE user_nsid = 
 
 require 'inc/close.inc.php';
 echo '<p>Done in '.(time() - $begin).' seconds.</p>';
-?>
 
-<p>This page will self refresh in 10 seconds...</p>
-<script language="javascript">
-setTimeout("window.location.reload()", 1000*10);
-</script>
+if (!SHOW_DEBUG) {
+  ?>
+  
+  <p>This page will self refresh in 10 seconds...</p>
+  <script language="javascript">
+  setTimeout("window.location.reload()", 1000*10);
+  </script>
+  
+  <?php
+}
 
-<?php
 require_once 'inc/layout_page_bottom.inc.php';
 ?>
