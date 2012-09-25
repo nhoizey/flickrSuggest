@@ -22,9 +22,11 @@ $(document).ready(function() {
     });
     return false;
   });
-  $('<p class="ignoreall"><a href="">ignore all</a></p>').insertBefore('.pager').find('a').bind('click', function () {
-    $('.ignore').click();
-    $('.ignoreall').remove();
-    return false;
-  });
+  if ($('.ignore').length > 0) {
+    $('<p class="ignoreall"><a href="">ignore all</a></p>').insertBefore('.pager.suggestions').find('a').bind('click', function () {
+      $('.ignore').click();
+      $('.ignoreall').remove();
+      return false;
+    });
+  }
 });

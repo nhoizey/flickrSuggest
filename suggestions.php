@@ -21,7 +21,7 @@ $nbPages = max(ceil($total / $nb), 1);
 if ($page > $nbPages) {
 	$page = $nbPages;
 }
-$pager = '<div class="pager">Pages: ';
+$pager = '<div class="pager suggestions">Pages: ';
 if ($nbPages > 1) {
   if ($page == 1) {
   	$pager .= ' <strong>«</strong>';
@@ -79,7 +79,7 @@ $pager .= ' <span class="num">('.$total.' photos)</span></div>';
 echo $pager;
 $suggestions = $db->getAll("SELECT DISTINCT photo_id, nb FROM favorites WHERE nb >= ".$nb_favs." AND photo_id NOT IN (".$myFavs.") ORDER BY nb DESC, photo_id LIMIT ".(($page - 1) * $nb).",".$nb);
 if ($total > 0) {
-  echo '<ol class="gallery">';  
+  echo '<ol class="gallery">';
   foreach($suggestions as $data) {
   	echo getPhotoHTML($data['photo_id'], $data['nb']);
   }
